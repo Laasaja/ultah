@@ -1302,19 +1302,28 @@
         </div>
     </div>
 
-<audio id="bg-music" loop>
-  <source src="monokrom.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-const music = document.getElementById("bg-music");
-music.volume = 0.5;
-
-// putar saat user klik pertama
-document.addEventListener("click", () => {
-  music.play();
-}, { once: true });
-</script>
+    <audio id="bg-music" loop>
+        <source src="/music/monokrom.mp3" type="audio/mpeg">
+      </audio>
+      
+      <script>
+      window.onload = () => {
+          // Hilangkan loading
+          setTimeout(() => {
+              document.body.classList.remove("not-loaded");
+          }, 1000);
+      
+          const music = document.getElementById("bg-music");
+          music.volume = 0.5; // volume 50%
+      
+          // Coba autoplay
+          music.play().catch(() => {
+              // Kalau gagal, tunggu klik pertama
+              document.body.addEventListener("click", () => {
+                  music.play();
+              }, { once: true });
+          });
+      };
+      </script>
 </body>
-
 </html>
