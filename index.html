@@ -394,60 +394,16 @@
       }
     }
 
-    /* Responsive untuk layar sangat kecil */
-    @media (max-width: 480px) {
-      .loading-wrapper {
-        padding: 15px 15px;
-        border-radius: 35px;
-      }
-
-      .name-container {
-        padding: 10px 8px;
-        border-radius: 30px;
-      }
-
-      .happy-birthday-label {
-        padding: 5px 20px;
-        font-size: 16px;
-      }
-
-      .birthday-cake {
-        width: 80px;
-      }
-
-      .message-box {
-        padding: 8px 15px;
-      }
-
-      .percentage-text {
-        padding: 4px 18px;
-      }
-    }
-
-    /* Style lainnya (sama seperti sebelumnya) */
-    .img {
-      display: inline-block;
-      margin-left: auto;
-      margin-right: auto;
-      position: relative;
-      top: 20px;
-      margin-bottom: 30px;
-      width: 350px;
-      max-width: 90%;
-    }
-
-    #tap {
-      display: inline-block;
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255,255,255,0.8);
-      padding: 8px 20px;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      z-index: 10;
+    /* Style untuk slide pesan - UKURAN DISESUAIKAN */
+    .slides {
+      max-width: 700px;
+      width: 95%;
+      height: auto;
+      min-height: 400px;
+      max-height: 80vh;
+      margin-top: 80px;
+      padding: 20px;
+      overflow-y: auto;
     }
 
     .paper {
@@ -456,7 +412,6 @@
       width: 90%;
       max-width: 800px;
       min-width: 300px;
-      height: 540px;
       margin: 50px auto;
       display: inline-block;
       vertical-align: middle;
@@ -488,16 +443,17 @@
       left: 50px;
       background: linear-gradient(transparent, transparent 28px, #91D1D3 28px);
       background-size: 30px 30px;
+      overflow-y: auto;
+      padding-right: 10px;
     }
 
     .paper-content .teks {
       text-align: left;
       width: 100%;
       max-width: 100%;
-      height: 100%;
-      max-height: 100%;
+      min-height: 100%;
       line-height: 30px;
-      padding: 0 10px;
+      padding: 0 15px 20px 10px;
       border: 0;
       outline: 0;
       background: transparent;
@@ -506,6 +462,8 @@
       font-size: 18px;
       box-sizing: border-box;
       z-index: 1;
+      white-space: pre-wrap;
+      word-wrap: break-word;
     }
 
     .kotak {
@@ -748,20 +706,39 @@
       text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
 
-    @media (max-width: 768px) {
-      .swiper {
-        height: 350px;
-      }
-      
-      #slideFoto {
-        margin-top: 50px;
-        padding: 20px 10px;
-      }
-      
-      .photo-title {
-        font-size: 20px;
-      }
+    /* Tombol Lanjutan */
+    .next-gift-button {
+      position: relative;
+      top: 320px;
+      display: inline-block;
+      padding: 15px 40px;
+      background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+      color: white;
+      font-size: 20px;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(255, 107, 107, 0.5);
+      transition: all 0.3s ease;
+      z-index: 10;
+      text-decoration: none;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      animation: buttonPulse 2s ease-in-out infinite;
     }
+
+    .next-gift-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(255, 107, 107, 0.8);
+      background: linear-gradient(45deg, #ff5252, #ff7676);
+    }
+
+    @keyframes buttonPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    
   </style>
 </head>
 
@@ -843,6 +820,7 @@
   <!-- Audio element dengan autoplay dan loop -->
   <audio id="background-music" src="./music/monokrom.mp3" preload="auto" autoplay loop></audio>
 
+  <!-- Halaman Utama Birthday -->
   <div class="bg" id="content">
     <div class="container" id="timer">
       <h5>Countdown to <span id='name'></span> birthday :</h5>
@@ -855,18 +833,29 @@
     </div>
 
     <div id="slideSatu" class="animate__animated animate__slideInDown animate__slow d-none">
-      <img src="./img/hbd1.png" class="img" alt="Happy Birthday">
+      <img src="./img/hbd1.png" 
+      style="width:200px; display:block; margin:0 auto;" 
+      alt="Happy Birthday">
     </div>
 
+    <!-- Slide 1 - Kata-kata bagian 1 -->
     <div id="slideDua" class="slides d-none paper animate__zoomInDown animate__animated animate__delay-2s animate__slow">
       <div class="paper-content">
         <p id="teks1" class="teks"></p>
       </div>
     </div>
 
+    <!-- Slide 2 - Kata-kata bagian 2 -->
     <div id="slideTiga" class="slides d-none paper animate__fadeInRight animate__animated">
       <div class="paper-content">
         <p id="teks2" class="teks"></p>
+      </div>
+    </div>
+
+    <!-- Slide 3 - Kata-kata bagian 3 -->
+    <div id="slideEmpatBaru" class="slides d-none paper animate__fadeInUp animate__animated">
+      <div class="paper-content">
+        <p id="teks3" class="teks"></p>
       </div>
     </div>
 
@@ -898,7 +887,6 @@
               <img src="./img/4.jpeg" alt="Memory 4">
               <div class="slide-caption">Kasih judul we 4</div>
             </div>
-
           </div>
           
           <!-- Navigation buttons -->
@@ -934,10 +922,22 @@
     </div>
     <p id="trims" class="text-muted d-none mt-2"></p>
 
+    <!-- Tombol Lanjutan Hadiah -->
+    <a href="bunga.html">
+      <button id="nextGiftBtn" class="next-gift-button d-none">
+        🎁 Lanjutkan Hadiah Selanjutnya 🎁
+      </button>
+    </a>
+
     <p id="tap" class="d-none animate__animated animate__pulse text-muted animate__slow animate__repeat-3">Ketuk untuk melanjutkan</p>
     
     <footer class="page-footer font-small blue fixed-bottom"></footer>
   </div>
+
+
+  <p id="tap" class="d-none animate__animated animate__pulse text-muted animate__slow animate__repeat-3">Ketuk untuk melanjutkan</p>
+  
+  <footer class="page-footer font-small blue fixed-bottom"></footer>
 
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -1205,11 +1205,32 @@
           tap.classList.add('d-none');
           setTimeout(function () {
             slideTiga.remove();
+            _slideEmpatBaru();
+          }, 1000);
+          document.body.removeEventListener('click', nextSlide);
+        }, { once: true });
+      }, 25000);
+    };
+
+    // Slide kata-kata bagian 3
+    const _slideEmpatBaru = function () {
+      const tap = document.getElementById('tap');
+      const slideEmpatBaru = document.getElementById('slideEmpatBaru');
+
+      slideEmpatBaru.classList.remove('d-none');
+      
+      setTimeout(function () {
+        tap.classList.remove('d-none');
+        document.body.addEventListener('click', function nextSlide() {
+          slideEmpatBaru.classList.replace('animate__fadeInUp', 'animate__fadeOut');
+          tap.classList.add('d-none');
+          setTimeout(function () {
+            slideEmpatBaru.classList.add('d-none');
             _slideFoto();
           }, 1000);
           document.body.removeEventListener('click', nextSlide);
         }, { once: true });
-      }, 20000);
+      }, 25000);
     };
 
     const _slideFoto = function () {
@@ -1278,6 +1299,7 @@
       const slideLima = document.getElementById('slideLima');
       slideLima.classList.remove('d-none');
       const trims = document.getElementById('trims');
+      const nextGiftBtn = document.getElementById('nextGiftBtn');
 
       setTimeout(() => {
         trims.classList.remove('d-none');
@@ -1287,32 +1309,59 @@
         slideLima.classList.add('animate__delay-3s');
         slideLima.classList.replace('animate__bounceIn', 'animate__fadeOut');
         trims.classList.add('animate__animated', 'animate__fadeOut', 'animate__delay-3s');
+        
         setTimeout(() => {
           trims.remove();
-          setTimeout(() => {
-            slideLima.remove();
-          }, 1000);
-        }, 6000);
+          slideLima.remove();
+          // Tampilkan tombol lanjutan
+          nextGiftBtn.classList.remove('d-none');
+        }, 1000);
       });
     };
 
-    // TypeIt animations
+    // Fungsi untuk membuka halaman bunga
+    function openBungaPage() {
+      const bungaPage = document.getElementById('bungaPage');
+      const content = document.getElementById('content');
+      
+      // Sembunyikan konten utama
+      content.style.display = 'none';
+      
+      // Tampilkan halaman bunga
+      bungaPage.classList.add('show');
+      
+      // Hilangkan class not-loaded untuk memulai animasi
+      setTimeout(() => {
+        bungaPage.classList.remove('not-loaded');
+      }, 100);
+    }
+
+    // Event listener untuk tombol lanjutan
+    document.getElementById('nextGiftBtn').addEventListener('click', openBungaPage);
+
+    // TypeIt animations untuk 3 slide kata-kata
     new TypeIt("#teks1", {
-      strings: ["Hari ini, saya langitkan semua doa terbaik saya untuk kamu.", "Semoga hal-hal yang membuat kamu runtuh turut menjadi alasan kamu untuk tetap tumbuh.", "Semoga dunia senantiasa menjaga kamu dimanapun kamu berada.", "Semoga hari-hari kamu selalu diiringi cinta yang tak pernah ada batasnya.", "Semoga setiap langkahmu dimudahkan hingga tercapai apa yang kamu inginkan."],
-      startDelay: 500,
-      speed: 60,
+      strings: ["alo Dede, wanita tercantik dan terlucu terimut dan termenggemaskan, makasii yaa udaa mauu punyaa aa, aa sangat beruntung punya Dede yang ngertiin aa di waktu yang tepat, aa waktu sebelum ketemu dede itu aa bingung mau cerita ke siapa mau ngeluh ke siapa karnaa gada yang mau sama aa🙁"],
+      startDelay: 1000,
+      speed: 80,
       waitUntilVisible: true,
-      nextStringDelay: 1500
     }).go();
 
     new TypeIt("#teks2", {
-      strings: ["Dengan ataupun tanpaku, semoga semesta selalu membahagiakan kamu bagimanapun caranya.", " ", "barakallah fi umrik, terima kasih sudah bertahan sampai sejauh ini.", " ", "- Wish all you the best"],
+      strings: ["tapii, setelah itu kamu datang buatt jadii tempat cerita aa, tempat aa ngeluh dan tempat buatt aa ngerasa seneng dan bahagia lagi, makasii yaa jangan pernah tinggal aa, kalo aa adaa salah tegur atau bilanginn, kalo tetep ga berubah, dedee bisa kok atur aa sesuka Dede atau bisa juga ubah aa jadi cowo impian dedee,"],
       startDelay: 1000,
-      speed: 60,
+      speed: 80,
       waitUntilVisible: true,
-      nextStringDelay: 1500
     }).go();
 
+    new TypeIt("#teks3", {
+      strings: ["jangann gengsi apalagi malu, aa gaa pernah ngerasa ilfeel mau kamu bagaimanapun, karnaa yang aa liat itu dari sifat dan karakter yang lucuu dan imut kayaa dedee, maaff iaaa kalo aa banyaaa salaa, im sowwy, i love you jangan pernah tinggalin aa yaa dedee gemess babaiii ❤️"],
+      startDelay: 1000,
+      speed: 80,
+      waitUntilVisible: true,
+    }).go();
+
+    // TypeIt untuk teks terimakasih
     new TypeIt("#trims", {
       strings: ["Terimakasih."],
       startDelay: 1000,
@@ -1328,11 +1377,37 @@
       initLoadingAnimation();
     });
 
-    // Confetti function (dipotong karena panjang, tapi tetap sama)
+    // Confetti function 
     function confetti() {
-      // ... (confetti function sama seperti sebelumnya)
-      // Saya tidak menulis ulang karena panjang, tapi tetap ada di kode asli
+      // Simplified confetti for demonstration
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.style.position = 'fixed';
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.top = '-10px';
+          confetti.style.width = '10px';
+          confetti.style.height = '10px';
+          confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+          confetti.style.borderRadius = '50%';
+          confetti.style.zIndex = '9999';
+          confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
+          document.body.appendChild(confetti);
+          
+          setTimeout(() => confetti.remove(), 5000);
+        }, i * 50);
+      }
     }
+
+    // Add confetti animation style
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes confettiFall {
+        0% { transform: translateY(0) rotate(0deg); }
+        100% { transform: translateY(100vh) rotate(720deg); }
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </body>
 
